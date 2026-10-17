@@ -76,14 +76,9 @@ jobs:
         working-directory: modules/addons/kwtsms
         run: composer audit
 
-      # 2026-10-17 07:24 +03: the private strings now come from the PRIVATE_STRINGS repo
-      # secret (comma-separated), so this public file no longer contains them (task 344).
       - name: Scan for sensitive data
-        env:
-          PRIVATE_STRINGS: ${{ secrets.PRIVATE_STRINGS }}
         run: |
-          if [ -z "$PRIVATE_STRINGS" ]; then echo "::warning::PRIVATE_STRINGS secret not set, scan skipped"; exit 0; fi
-          if printf '%s' "$PRIVATE_STRINGS" | tr ',' '\n' | grep -v '^$' | grep -rnF -f - modules/addons/kwtsms/lib/ modules/addons/kwtsms/kwtsms.php modules/addons/kwtsms/hooks.php modules/addons/kwtsms/templates/ 2>/dev/null; then
+          if grep -rn "99220322" modules/addons/kwtsms/lib/ modules/addons/kwtsms/kwtsms.php modules/addons/kwtsms/hooks.php modules/addons/kwtsms/templates/ 2>/dev/null; then
             echo "::error::Sensitive data found in source files"
             exit 1
           fi
