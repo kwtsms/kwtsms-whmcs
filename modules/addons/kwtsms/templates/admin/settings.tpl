@@ -111,7 +111,8 @@ if ($senderids_cache !== '') {
         </label>
         <div class="kwt-toggle-info">
             <h4>Test Mode</h4>
-            <p>Messages are queued but never delivered. No credits consumed. Disable before going live.</p>
+            <?php /* 2026-10-22 15:38 +03: test mode holds credits until the queued test is deleted; old text said no credits were consumed. */ ?>
+            <p>Messages are queued but not delivered. Credits are held until you delete them from the Sending Queue. Disable before going live.</p>
         </div>
     </div>
 

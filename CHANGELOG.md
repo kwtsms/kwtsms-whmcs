@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Docs
+- Settings: test mode hint now says test messages hold their credits until you delete them from the Sending Queue (previously said no credits were consumed)
+
 ## [1.0.0] - 2026-03-26
 
 ### Added
