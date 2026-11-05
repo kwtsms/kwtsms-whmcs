@@ -105,7 +105,8 @@ class SmsHelper
             // Cache is stale: fetch fresh balance from API
             $username = GatewayManager::get('api_username');
             $password = GatewayManager::get('api_password');
-            $tempClient = new KwtSMS($username, $password, 'KWT-SMS', false, '');
+            // 2026-11-05 14:53 +03: app token for the User-Agent, #939
+            $tempClient = new KwtSMS($username, $password, 'KWT-SMS', false, '', GatewayManager::appName());
             $freshBalance = $tempClient->balance();
             if ($freshBalance !== null) {
                 $lastBalance = $freshBalance;
@@ -126,7 +127,8 @@ class SmsHelper
         $testMode = GatewayManager::get('test_mode') === '1';
 
         // Disable library file logging -- we use our DB Logger
-        $client = new KwtSMS($username, $password, $senderId, $testMode, '');
+        // 2026-11-05 14:53 +03: app token for the User-Agent, #939
+        $client = new KwtSMS($username, $password, $senderId, $testMode, '', GatewayManager::appName());
 
         // Step 7: client->send() -- library handles: local validation, deduplicate, clean_message, bulk (>200), ERR013 backoff
         $phoneStr = implode(',', $covered);

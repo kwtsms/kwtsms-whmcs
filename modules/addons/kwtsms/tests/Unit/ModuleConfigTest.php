@@ -65,6 +65,22 @@ class ModuleConfigTest extends TestCase
         $this->assertMatchesRegularExpression('/^\d+\.\d+\.\d+$/', $config['version']);
     }
 
+    /**
+     * 2026-11-05 14:53 +03: the User-Agent app token is kwtsms-whmcs/<module version>, and the
+     * kwtsms-php client sends it when the installed library supports app_name, #939.
+     */
+    public function testAppNameTokenUsesModuleVersion(): void
+    {
+        $token = \KwtSMS\WHMCS\GatewayManager::appName();
+        $this->assertSame('kwtsms-whmcs/' . kwtsms_config()['version'], $token);
+
+        $client = new \KwtSMS\KwtSMS('user', 'pass', 'KWT-SMS', true, '', $token);
+        if (!method_exists($client, 'getUserAgent')) {
+            $this->markTestSkipped('Installed kwtsms-php has no app_name support yet');
+        }
+        $this->assertStringStartsWith($token . ' kwtsms-php/', $client->getUserAgent());
+    }
+
     public function testConfigLanguageIsEnglish(): void
     {
         $config = kwtsms_config();

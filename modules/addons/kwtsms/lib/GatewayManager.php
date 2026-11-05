@@ -34,6 +34,22 @@ class GatewayManager
     private const MODULE = 'kwtsms';
 
     /**
+     * Module version: the one source for kwtsms_config() and the User-Agent token.
+     * 2026-11-05 14:53 +03: moved here from kwtsms_config() so hooks can read it without the module file, #939.
+     */
+    public const VERSION = '1.0.0';
+
+    /**
+     * Product token passed as the kwtsms-php app_name (User-Agent): "kwtsms-whmcs/<VERSION>".
+     * 2026-11-05 14:53 +03: added so kwtSMS can count accounts per integration (name and version only,
+     * no personal data), #939.
+     */
+    public static function appName(): string
+    {
+        return 'kwtsms-whmcs/' . self::VERSION;
+    }
+
+    /**
      * Authenticate with kwtSMS API. On success, fetch and cache senderids + coverage.
      * Returns success flag, balance, CSV caches, and error message if any.
      *
@@ -42,7 +58,8 @@ class GatewayManager
     public static function login(string $username, string $password): array
     {
         try {
-            $client = new KwtSMS($username, $password, 'KWT-SMS', false, '');
+            // 2026-11-05 14:53 +03: app token for the User-Agent, #939
+            $client = new KwtSMS($username, $password, 'KWT-SMS', false, '', self::appName());
 
             $balance = $client->balance();
 
@@ -124,7 +141,8 @@ class GatewayManager
         }
 
         try {
-            $client = new KwtSMS($username, $password, 'KWT-SMS', false, '');
+            // 2026-11-05 14:53 +03: app token for the User-Agent, #939
+            $client = new KwtSMS($username, $password, 'KWT-SMS', false, '', self::appName());
 
             $balance = $client->balance();
             if ($balance !== null) {

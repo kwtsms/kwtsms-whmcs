@@ -42,7 +42,7 @@ function kwtsms_config(): array
     return [
         'name'        => 'kwtSMS',
         'description' => 'Send automated SMS to clients and admins via kwtSMS (kwtsms.com). Kuwait market A2P SMS gateway.',
-        'version'     => '1.0.0',
+        'version'     => GatewayManager::VERSION, // 2026-11-05 14:53 +03: single version source, #939
         'author'      => 'kwtSMS',
         'language'    => 'english',
         'fields'      => [],
