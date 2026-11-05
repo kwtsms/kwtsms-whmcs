@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.2",
-        "kwtsms/kwtsms-php": "^1.0"
+        "kwtsms/kwtsms-php": "^1.8"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10 || ^2.0",
