@@ -14,14 +14,30 @@ use KwtSMS\MessageUtils;
  *
  * Requires KWTSMS_USERNAME and KWTSMS_PASSWORD env vars.
  * All sends use test=1 (messages queue but never deliver).
- * Phone: 96598765432 (fake number, per project rules).
+ * Phone: send tests read KWTSMS_TEST_NUMBER (965XXXXXXXX) and skip when it is unset.
  *
- * Run: KWTSMS_USERNAME=xxx KWTSMS_PASSWORD=yyy vendor/bin/phpunit --testsuite Api
+ * Run: KWTSMS_USERNAME=xxx KWTSMS_PASSWORD=yyy KWTSMS_TEST_NUMBER=965XXXXXXXX vendor/bin/phpunit --testsuite Api
+ *
+ * 2026-11-05 11:20 +03: send tests take the number from KWTSMS_TEST_NUMBER via testNumber()
+ * instead of a hard-coded sample mobile (sample numbers belong to real people); pure
+ * normalization checks use 99912345678 (country code 999 is unassigned), int-testnumber.
  */
 class KwtSmsApiTest extends TestCase
 {
     private ?KwtSMS $client = null;
-    private string $testPhone = '96598765432';
+
+    /**
+     * Test number from KWTSMS_TEST_NUMBER; skips the test when unset or not a Kuwait mobile.
+     * The value is never printed.
+     */
+    private function testNumber(): string
+    {
+        $number = (string) getenv('KWTSMS_TEST_NUMBER');
+        if (preg_match('/^965[4569]\d{7}$/', $number) !== 1) {
+            $this->markTestSkipped('KWTSMS_TEST_NUMBER unset or not 965XXXXXXXX');
+        }
+        return $number;
+    }
 
     protected function setUp(): void
     {
@@ -86,7 +102,7 @@ class KwtSmsApiTest extends TestCase
 
     public function testSendTestModeReturnsOk(): void
     {
-        $response = $this->client->send($this->testPhone, 'kwtSMS WHMCS module test message');
+        $response = $this->client->send($this->testNumber(), 'kwtSMS WHMCS module test message');
 
         $this->assertIsArray($response);
         $this->assertArrayHasKey('result', $response);
@@ -97,7 +113,7 @@ class KwtSmsApiTest extends TestCase
 
     public function testSendTestModeReturnsMsgId(): void
     {
-        $response = $this->client->send($this->testPhone, 'Test msg-id check');
+        $response = $this->client->send($this->testNumber(), 'Test msg-id check');
 
         $this->assertArrayHasKey('msg-id', $response);
         $this->assertIsString($response['msg-id']);
@@ -106,7 +122,7 @@ class KwtSmsApiTest extends TestCase
 
     public function testSendTestModeReturnsBalanceAfter(): void
     {
-        $response = $this->client->send($this->testPhone, 'Test balance-after check');
+        $response = $this->client->send($this->testNumber(), 'Test balance-after check');
 
         $this->assertArrayHasKey('balance-after', $response);
         $this->assertGreaterThanOrEqual(0, (float) $response['balance-after']);
@@ -115,7 +131,7 @@ class KwtSmsApiTest extends TestCase
     public function testSendArabicMessage(): void
     {
         $arabicMsg = 'مرحبا، هذه رسالة تجريبية من kwtSMS WHMCS';
-        $response = $this->client->send($this->testPhone, $arabicMsg);
+        $response = $this->client->send($this->testNumber(), $arabicMsg);
 
         $this->assertIsArray($response);
         $this->assertSame('OK', $response['result'], 'Arabic SMS should send OK in test mode');
@@ -123,7 +139,7 @@ class KwtSmsApiTest extends TestCase
 
     public function testSendEmptyMessageFails(): void
     {
-        $response = $this->client->send($this->testPhone, '');
+        $response = $this->client->send($this->testNumber(), '');
 
         // Library or API should reject empty messages
         $this->assertIsArray($response);
@@ -134,9 +150,9 @@ class KwtSmsApiTest extends TestCase
 
     public function testPhoneUtilsNormalize(): void
     {
-        $this->assertSame('96598765432', PhoneUtils::normalize_phone('+965-9876-5432'));
-        $this->assertSame('96598765432', PhoneUtils::normalize_phone('0096598765432'));
-        $this->assertSame('98765432', PhoneUtils::normalize_phone('098765432'));
+        $this->assertSame('99912345678', PhoneUtils::normalize_phone('+999-1234-5678'));
+        $this->assertSame('99912345678', PhoneUtils::normalize_phone('0099912345678'));
+        $this->assertSame('12345678', PhoneUtils::normalize_phone('012345678'));
     }
 
     public function testMessageUtilsClean(): void

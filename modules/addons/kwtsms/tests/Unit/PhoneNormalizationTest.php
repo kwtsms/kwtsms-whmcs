@@ -28,30 +28,33 @@ class PhoneNormalizationTest extends TestCase
      */
     public static function phoneProvider(): array
     {
+        // 2026-11-05 11:21 +03: mock numbers use 99912345678 (country code 999 is unassigned,
+        // nobody holds it) instead of a sample Kuwait mobile that belongs to a real person;
+        // normalizePhone() has no country rules, so the cases test the same logic, int-testnumber.
         return [
-            'Kuwait local 8 digits' => ['98765432', '965', '96598765432'],
-            'Kuwait with country code' => ['96598765432', '965', '96598765432'],
-            'Kuwait with plus' => ['+96598765432', '965', '96598765432'],
-            'Kuwait with 00 prefix' => ['0096598765432', '965', '96598765432'],
-            'Kuwait with leading zero' => ['098765432', '965', '96598765432'],
-            'Dashes and spaces' => ['00965-98-765-432', '965', '96598765432'],
-            'Parentheses and dots' => ['(965) 9876.5432', '965', '96598765432'],
+            'Local 8 digits' => ['12345678', '999', '99912345678'],
+            'With country code' => ['99912345678', '999', '99912345678'],
+            'With plus' => ['+99912345678', '999', '99912345678'],
+            'With 00 prefix' => ['0099912345678', '999', '99912345678'],
+            'With leading zero' => ['012345678', '999', '99912345678'],
+            'Dashes and spaces' => ['00999-12-345-678', '999', '99912345678'],
+            'Parentheses and dots' => ['(999) 1234.5678', '999', '99912345678'],
             'US number stays intact' => ['12025551234', '965', '12025551234'],
             'Short number gets country code' => ['5551234', '1', '15551234'],
-            'Empty country code no prepend' => ['98765432', '', '98765432'],
-            'Arabic digits' => ["\xD9\xA9\xD9\xA8\xD9\xA7\xD9\xA6\xD9\xA5\xD9\xA4\xD9\xA3\xD9\xA2", '965', '96598765432'],
+            'Empty country code no prepend' => ['12345678', '', '12345678'],
+            'Arabic digits' => ["\xD9\xA1\xD9\xA2\xD9\xA3\xD9\xA4\xD9\xA5\xD9\xA6\xD9\xA7\xD9\xA8", '999', '99912345678'],
         ];
     }
 
     public function testNormalizedPhoneIsDigitsOnly(): void
     {
-        $result = SmsHelper::normalizePhone('+965 (9876) 5432', '965');
+        $result = SmsHelper::normalizePhone('+999 (1234) 5678', '999');
         $this->assertMatchesRegularExpression('/^\d+$/', $result);
     }
 
     public function testNormalizedPhoneHasNoLeadingZeros(): void
     {
-        $result = SmsHelper::normalizePhone('00096598765432', '965');
-        $this->assertStringStartsWith('965', $result);
+        $result = SmsHelper::normalizePhone('00099912345678', '999');
+        $this->assertStringStartsWith('999', $result);
     }
 }

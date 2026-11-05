@@ -128,8 +128,9 @@ if ($senderids_cache !== '') {
 
     <div class="kwt-form-group">
         <label for="kwt-admin-phones">Admin Phone Numbers</label>
-        <textarea id="kwt-admin-phones" rows="4" placeholder="One phone number per line&#10;e.g. 96598765432"><?= htmlspecialchars($admin_phones ?? '') ?></textarea>
-        <div class="kwt-notice">One number per line, international format (e.g. 96598765432). These receive admin alert SMS.</div>
+        <?php /* 2026-11-05 11:20 +03: phone placeholders and examples in this file now use 965XXXXXXXX instead of a sample mobile number (sample numbers belong to real people), int-testnumber */ ?>
+        <textarea id="kwt-admin-phones" rows="4" placeholder="One phone number per line&#10;e.g. 965XXXXXXXX"><?= htmlspecialchars($admin_phones ?? '') ?></textarea>
+        <div class="kwt-notice">One number per line, international format (e.g. 965XXXXXXXX). These receive admin alert SMS.</div>
     </div>
 
     <div class="kwt-toggle-row">
@@ -179,7 +180,7 @@ if ($senderids_cache !== '') {
     <?php else: ?>
     <div class="kwt-form-group">
         <label for="kwt-test-phone">Phone Number</label>
-        <input type="text" id="kwt-test-phone" placeholder="e.g. 96598765432" style="max-width:100%">
+        <input type="text" id="kwt-test-phone" placeholder="e.g. 965XXXXXXXX" style="max-width:100%">
         <div class="kwt-notice">International format, digits only.</div>
     </div>
     <button class="btn-kwt" style="width:100%" onclick="kwtSendTestSms()">Send Test SMS</button>

@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Settings placeholders show 965XXXXXXXX instead of a sample mobile number; API send tests read KWTSMS_TEST_NUMBER and unit tests use 99912345678
+
 ### Docs
 - Settings: test mode hint now says test messages hold their credits until you delete them from the Sending Queue (previously said no credits were consumed)
 
