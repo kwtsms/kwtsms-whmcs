@@ -31,8 +31,16 @@ jobs:
       - name: Build zip
         env:
           PKG_VERSION: ${{ steps.version.outputs.VERSION }}
+        # 2026-11-06 01:06 +03: also drop vendor examples, .env.example, CS fixer config and vendor
+        # CONTRIBUTING/SECURITY/CHANGELOG (shipped by kwtsms-php dists before its export-ignore fix), ci-dryrun-all
         run: |
           zip -r "kwtsms-whmcs-${PKG_VERSION}.zip" modules/addons/kwtsms/ \
+            --exclude "*/vendor/*/examples/*" \
+            --exclude "*/.env.example" \
+            --exclude "*/.php-cs-fixer*" \
+            --exclude "*/vendor/*/CONTRIBUTING.md" \
+            --exclude "*/vendor/*/SECURITY.md" \
+            --exclude "*/vendor/*/CHANGELOG.md" \
             --exclude "*/vendor/*/test*" \
             --exclude "*/vendor/*/tests*" \
             --exclude "*/vendor/*/Tests*" \
