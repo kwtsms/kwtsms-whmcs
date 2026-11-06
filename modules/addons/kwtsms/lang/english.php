@@ -1,6 +1,6 @@
 <?php
 /**
- * kwtSMS WHMCS Module — Language: English
+ * kwtSMS WHMCS Module: Language: English
  *
  * Description: All UI strings for the admin interface in English.
  * Related files: lang/arabic.php, templates/admin/*.tpl

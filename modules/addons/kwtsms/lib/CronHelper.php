@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — CronHelper
+ * kwtSMS WHMCS Module: CronHelper
  *
  * Description: Daily cron sync for balance, sender IDs, and coverage.
  *   syncGateway() is called by the DailyCronJob hook in hooks.php.

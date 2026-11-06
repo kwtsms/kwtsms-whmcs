@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — AJAX: test_sms
+ * kwtSMS WHMCS Module: AJAX: test_sms
  *
  * Sends a test SMS to a given phone number through the full SmsHelper pipeline.
  * Uses the currently configured test_mode and sender ID.

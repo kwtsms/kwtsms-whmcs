@@ -47,7 +47,7 @@ if ($senderids_cache !== '') {
             </tr>
             <tr>
                 <td style="padding:4px 0;color:#888;font-family:'Montserrat',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.3px">Balance</td>
-                <td style="font-weight:700"><?= $last_balance !== '' ? number_format((float) $last_balance, 2) . ' credits' : '—' ?></td>
+                <td style="font-weight:700"><?= $last_balance !== '' ? number_format((float) $last_balance, 2) . ' credits' : '-' ?></td>
             </tr>
             <tr>
                 <td style="padding:4px 0;color:#888;font-family:'Montserrat',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.3px">Last Sync</td>

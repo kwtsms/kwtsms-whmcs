@@ -102,9 +102,9 @@ $pageUrl = function(int $p) use ($modulelink, $logtab): string {
                         <span class="kwt-result-err">FAIL</span>
                     <?php endif; ?>
                 </td>
-                <td style="font-size:11px;color:#aaa"><?= htmlspecialchars($row->error_code ?? '—') ?></td>
-                <td style="font-family:monospace;font-size:10px;color:#aaa;max-width:140px;overflow:hidden;text-overflow:ellipsis" title="<?= htmlspecialchars($row->msgid ?? '') ?>"><?= $row->msgid ? htmlspecialchars(substr($row->msgid, 0, 16)) . '...' : '—' ?></td>
-                <td style="font-size:12px;color:#888"><?= $row->balance_after !== null ? number_format((float)$row->balance_after, 2) : '—' ?></td>
+                <td style="font-size:11px;color:#aaa"><?= htmlspecialchars($row->error_code ?? '-') ?></td>
+                <td style="font-family:monospace;font-size:10px;color:#aaa;max-width:140px;overflow:hidden;text-overflow:ellipsis" title="<?= htmlspecialchars($row->msgid ?? '') ?>"><?= $row->msgid ? htmlspecialchars(substr($row->msgid, 0, 16)) . '...' : '-' ?></td>
+                <td style="font-size:12px;color:#888"><?= $row->balance_after !== null ? number_format((float)$row->balance_after, 2) : '-' ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -135,8 +135,8 @@ $pageUrl = function(int $p) use ($modulelink, $logtab): string {
                 <td style="font-size:11px;color:#666"><?= htmlspecialchars($row->event) ?></td>
                 <td style="font-family:monospace;font-size:12px"><?= htmlspecialchars($row->phone) ?></td>
                 <td style="font-family:monospace;font-size:11px;color:#888"><?= htmlspecialchars($row->ip) ?></td>
-                <td style="font-size:12px;color:#888"><?= $row->clientid ? '#' . $row->clientid : '—' ?></td>
-                <td style="font-size:12px;color:#666;max-width:200px" title="<?= htmlspecialchars($row->detail ?? '') ?>"><?= htmlspecialchars(mb_substr($row->detail ?? '', 0, 60)) ?><?= mb_strlen($row->detail ?? '') > 60 ? '…' : '' ?></td>
+                <td style="font-size:12px;color:#888"><?= $row->clientid ? '#' . $row->clientid : '-' ?></td>
+                <td style="font-size:12px;color:#666;max-width:200px" title="<?= htmlspecialchars($row->detail ?? '') ?>"><?= htmlspecialchars(mb_substr($row->detail ?? '', 0, 60)) ?><?= mb_strlen($row->detail ?? '') > 60 ? '...' : '' ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -170,8 +170,8 @@ $pageUrl = function(int $p) use ($modulelink, $logtab): string {
                 <td style="font-size:12px"><?= htmlspecialchars($row->message) ?></td>
                 <td style="font-size:11px;font-family:monospace;color:#aaa;max-width:200px">
                     <?php if ($row->context): ?>
-                    <span title="<?= htmlspecialchars($row->context) ?>"><?= htmlspecialchars(mb_substr($row->context, 0, 60)) ?><?= mb_strlen($row->context) > 60 ? '…' : '' ?></span>
-                    <?php else: ?>—<?php endif; ?>
+                    <span title="<?= htmlspecialchars($row->context) ?>"><?= htmlspecialchars(mb_substr($row->context, 0, 60)) ?><?= mb_strlen($row->context) > 60 ? '...' : '' ?></span>
+                    <?php else: ?>-<?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — Hooks
+ * kwtSMS WHMCS Module: Hooks
  *
  * Description: All WHMCS hook registrations for the kwtSMS addon.
  *   This file is auto-loaded by WHMCS from /modules/addons/kwtsms/.

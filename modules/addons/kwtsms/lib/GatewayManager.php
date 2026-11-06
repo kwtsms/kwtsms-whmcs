@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — GatewayManager
+ * kwtSMS WHMCS Module: GatewayManager
  *
  * Description: Manages gateway state in tbladdonmodules.
  *   login()        -- authenticates with kwtSMS API, fetches and caches senderids + coverage

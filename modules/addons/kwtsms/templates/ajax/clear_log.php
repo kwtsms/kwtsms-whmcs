@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — AJAX: clear_log
+ * kwtSMS WHMCS Module: AJAX: clear_log
  *
  * Truncates a specified kwtSMS log table.
  * Allowed tables: mod_kwtsms_log, mod_kwtsms_attempts, mod_kwtsms_debug_log

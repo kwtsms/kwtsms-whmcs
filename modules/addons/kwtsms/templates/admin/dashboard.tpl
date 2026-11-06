@@ -65,7 +65,7 @@ try {
     </div>
     <div class="kwt-stat">
         <div class="kwt-stat-label">Balance</div>
-        <div class="kwt-stat-value"><?= $last_balance !== '' ? number_format((float) $last_balance, 2) : '—' ?></div>
+        <div class="kwt-stat-value"><?= $last_balance !== '' ? number_format((float) $last_balance, 2) : '-' ?></div>
         <div style="font-size:11px;color:#aaa;margin-top:4px">credits</div>
     </div>
     <div class="kwt-stat">
@@ -78,7 +78,7 @@ try {
     </div>
     <div class="kwt-stat">
         <div class="kwt-stat-label">Last Sync</div>
-        <div class="kwt-stat-value" style="font-size:13px"><?= $last_sync !== '' ? date('M j, H:i', strtotime($last_sync)) : '—' ?></div>
+        <div class="kwt-stat-value" style="font-size:13px"><?= $last_sync !== '' ? date('M j, H:i', strtotime($last_sync)) : '-' ?></div>
     </div>
 </div>
 
@@ -140,7 +140,7 @@ try {
                         <?php endif; ?>
                     <?php endif; ?>
                 </td>
-                <td style="font-size:12px;color:#888"><?= $row->balance_after !== null ? number_format((float) $row->balance_after, 2) : '—' ?></td>
+                <td style="font-size:12px;color:#888"><?= $row->balance_after !== null ? number_format((float) $row->balance_after, 2) : '-' ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

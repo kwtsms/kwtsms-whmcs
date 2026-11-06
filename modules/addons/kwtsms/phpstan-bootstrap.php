@@ -1,7 +1,7 @@
 <?php
 /**
  * PHPStan bootstrap: stubs for WHMCS classes/functions not present in vendor.
- * Only used during static analysis — never loaded at runtime.
+ * Only used during static analysis: never loaded at runtime.
  */
 
 // ---- Global namespace: WHMCS functions ----

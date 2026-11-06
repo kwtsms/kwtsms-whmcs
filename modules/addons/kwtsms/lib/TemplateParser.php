@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — TemplateParser
+ * kwtSMS WHMCS Module: TemplateParser
  *
  * Description: Resolves {placeholder} tokens in EN/AR message templates.
  *   Loads the template from tbladdonmodules by event key and language.

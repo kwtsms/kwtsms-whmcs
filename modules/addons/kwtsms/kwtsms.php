@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — Main Entry Point
+ * kwtSMS WHMCS Module: Main Entry Point
  *
  * Description: WHMCS Addon Module entry point. Defines the required functions:
  *   kwtsms_config()      -- module metadata (name, version, author)

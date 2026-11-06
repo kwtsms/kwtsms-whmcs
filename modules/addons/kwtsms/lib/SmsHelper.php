@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — SmsHelper
+ * kwtSMS WHMCS Module: SmsHelper
  *
  * Description: The single entry point for all SMS sends in the module.
  *   send() handles single number, array of numbers, and 200+ bulk transparently.

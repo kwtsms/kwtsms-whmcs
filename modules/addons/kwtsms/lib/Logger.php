@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — Logger
+ * kwtSMS WHMCS Module: Logger
  *
  * Description: Writes structured records to the three log tables.
  *   log()        -> mod_kwtsms_log (all SMS sends, success and failure, full phone unmasked)

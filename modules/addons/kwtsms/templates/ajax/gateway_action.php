@@ -1,7 +1,7 @@
 <?php
 
 /**
- * kwtSMS WHMCS Module — AJAX: gateway_action
+ * kwtSMS WHMCS Module: AJAX: gateway_action
  *
  * Handles gateway management actions from the admin Settings tab.
  * All actions require a valid WHMCS session token (POST 'token').
