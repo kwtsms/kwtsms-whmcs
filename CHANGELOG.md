@@ -11,6 +11,8 @@
 
 ### Fixed
 - WHMCS 9.1: gateway login, test SMS and log actions in the admin area work again.
+- Invoice paid SMS is now sent to the client.
+- New order alerts show the client's name.
 
 ### Changed
 - Settings and documentation improvements.

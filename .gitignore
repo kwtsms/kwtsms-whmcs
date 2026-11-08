@@ -28,3 +28,4 @@ docker/
 
 # Logs
 *.log
+__pycache__/
