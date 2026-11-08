@@ -18,7 +18,9 @@ header('Content-Type: application/json');
 
 // CSRF validation
 $token = (string) ($_POST['token'] ?? '');
-if (empty($_SESSION['token']) || !hash_equals($_SESSION['token'], $token)) {
+// 2026-11-08 08:17 +03: token from kwtsms_csrf_token(); WHMCS 9.1 no longer stores $_SESSION['token'] (whmcs-91-compat)
+$expected = kwtsms_csrf_token();
+if ($expected === '' || !hash_equals($expected, $token)) {
     echo json_encode(['success' => false, 'error' => 'Invalid token.']);
     exit;
 }
