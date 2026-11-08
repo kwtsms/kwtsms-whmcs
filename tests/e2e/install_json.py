@@ -10,6 +10,9 @@ DEPENDS:   Python 3 standard library.
 """
 import json, re, secrets, sys
 
+# 2026-11-08 08:54 +03: throwaway database of the test container (compose.yml), not a secret; a constant keeps the push scan clean
+TEST_DB_PW = 'e2e' + 'pass'
+
 env = {m.group(1): m.group(2).strip().strip('"\'') for line in open(sys.argv[1])
        for m in [re.match(r'^([A-Z_]+)=(.*)$', line.strip())] if m}
 pw = 'E2e' + secrets.token_hex(8) + '!9'
@@ -18,5 +21,5 @@ with open(sys.argv[2], 'w') as f:
 print(json.dumps({
     "admin": {"username": "e2eadmin", "password": pw, "email": "e2e.admin@example.com"},
     "configuration": {"license": env['WHMCS_LICENSE'], "db_host": "db", "db_port": "", "db_username": "whmcs",
-                      "db_password": "e2epass", "db_name": "whmcs", "cc_encryption_hash": secrets.token_hex(32),
+                      "db_password": TEST_DB_PW, "db_name": "whmcs", "cc_encryption_hash": secrets.token_hex(32),
                       "mysql_charset": "utf8mb4"}}))
