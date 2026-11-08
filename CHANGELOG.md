@@ -2,17 +2,19 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-08
+
 ### Added
-- Requests to kwtSMS carry the integration name and version (no personal data) so kwtSMS can see which integrations are in use.
+- Support for WHMCS 9.1.
+- Requests to kwtSMS identify the integration and its version (no personal data).
+- MIT licence file.
 
 ### Fixed
 - WHMCS 9.1: gateway login, test SMS and log actions in the admin area work again.
 
 ### Changed
-- Settings placeholders show 965XXXXXXXX instead of a sample mobile number; API send tests read KWTSMS_TEST_NUMBER and unit tests use 99912345678
-
-### Docs
-- Settings: test mode hint now says test messages hold their credits until you delete them from the Sending Queue (previously said no credits were consumed)
+- Settings and documentation improvements.
+- Smaller release package.
 
 ## [1.0.0] - 2026-03-26
 

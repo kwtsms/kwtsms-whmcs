@@ -114,7 +114,7 @@
         </tr>
         <tr>
             <td style="padding:4px 0;color:#888">Version</td>
-            <td style="font-weight:700;text-align:right">1.0.0</td>
+            <?php /* 2026-11-08 08:26 +03: version from GatewayManager::VERSION, not hard-coded (whmcs-101-release) */ ?><td style="font-weight:700;text-align:right"><?= htmlspecialchars(\KwtSMS\WHMCS\GatewayManager::VERSION) ?></td>
         </tr>
         <tr>
             <td style="padding:4px 0;color:#888">WHMCS</td>
