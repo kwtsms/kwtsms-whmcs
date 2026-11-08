@@ -154,6 +154,22 @@ function kwtsms_deactivate(): array
  *
  * @param array<string, mixed> $vars WHMCS-provided variables
  */
+/**
+ * WHMCS admin CSRF token for the module's AJAX calls.
+ * 2026-11-08 08:17 +03: WHMCS 9.1 derives the token (generate_token) instead of keeping
+ * $_SESSION['token']; older versions keep the session key. whmcs-91-compat.
+ */
+function kwtsms_csrf_token(): string
+{
+    if (function_exists('generate_token')) {
+        $t = (string) generate_token('plain');
+        if ($t !== '') {
+            return $t;
+        }
+    }
+    return isset($_SESSION['token']) ? (string) $_SESSION['token'] : '';
+}
+
 function kwtsms_output(array $vars): void
 {
     $moduleLink = $vars['modulelink'];
@@ -204,7 +220,8 @@ function kwtsms_output(array $vars): void
         'debug_log_enabled'    => GatewayManager::get('debug_log_enabled'),
         'admin_phones'         => GatewayManager::get('admin_phones'),
         'admin_evt_new_order'  => GatewayManager::get('admin_evt_admin_new_order'),
-        'whmcs_token'          => isset($_SESSION['token']) ? $_SESSION['token'] : '',
+        // 2026-11-08 08:17 +03: token from kwtsms_csrf_token(); WHMCS 9.1 no longer stores $_SESSION['token'] (whmcs-91-compat)
+        'whmcs_token'          => kwtsms_csrf_token(),
     ];
 
     $tplPath = __DIR__ . '/templates/admin/' . $tab . '.tpl';

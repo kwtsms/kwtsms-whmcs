@@ -5,6 +5,9 @@
 ### Added
 - Requests to kwtSMS carry the integration name and version (no personal data) so kwtSMS can see which integrations are in use.
 
+### Fixed
+- WHMCS 9.1: gateway login, test SMS and log actions in the admin area work again.
+
 ### Changed
 - Settings placeholders show 965XXXXXXXX instead of a sample mobile number; API send tests read KWTSMS_TEST_NUMBER and unit tests use 99912345678
 
