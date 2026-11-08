@@ -82,7 +82,8 @@ add_hook('InvoicePaid', 1, function (array $vars): void {
 
     $invoice = Capsule::table('tblinvoices')
         ->where('id', $invoiceId)
-        ->first(['userid', 'total', 'duedate', 'currencysymbol']);
+        // 2026-11-08 08:43 +03: tblinvoices has no currency column; the old 'currencysymbol' select threw and no SMS was sent (whmcs-e2e)
+        ->first(['userid', 'total', 'duedate']);
 
     if ($invoice === null) {
         Logger::logDebug('warning', 'hook:InvoicePaid', 'Invoice not found', ['invoiceid' => $invoiceId]);
@@ -93,14 +94,16 @@ add_hook('InvoicePaid', 1, function (array $vars): void {
 
     $client = Capsule::table('tblclients')
         ->where('id', $clientId)
-        ->first(['firstname', 'lastname', 'phonenumber']);
+        ->first(['firstname', 'lastname', 'phonenumber', 'currency']);
 
     if ($client === null || empty($client->phonenumber)) {
         Logger::logDebug('info', 'hook:InvoicePaid', 'No phone on client, skipping', ['clientid' => $clientId]);
         return;
     }
 
-    $amount = ($invoice->currencysymbol ?? '') . number_format((float) $invoice->total, 2);
+    // 2026-11-08 08:43 +03: currency prefix/suffix from the client's currency (whmcs-e2e)
+    $currency = Capsule::table('tblcurrencies')->where('id', (int) ($client->currency ?? 0))->first(['prefix', 'suffix']);
+    $amount = trim(($currency->prefix ?? '') . number_format((float) $invoice->total, 2) . ($currency->suffix ?? ''));
     $placeholders = [
         '{firstname}'      => htmlspecialchars($client->firstname ?? '', ENT_QUOTES, 'UTF-8'),
         '{fullname}'       => htmlspecialchars(trim(($client->firstname ?? '') . ' ' . ($client->lastname ?? '')), ENT_QUOTES, 'UTF-8'),
@@ -129,6 +132,10 @@ add_hook('InvoicePaid', 1, function (array $vars): void {
 add_hook('AfterShoppingCartCheckout', 1, function (array $vars): void {
     $orderId = (int) ($vars['OrderID'] ?? 0);
     $userId  = (int) ($vars['UserID'] ?? 0);
+    // 2026-11-08 08:43 +03: AfterShoppingCartCheckout passes no UserID; read the order's client so the alert names them (whmcs-e2e)
+    if ($userId === 0 && $orderId > 0) {
+        $userId = (int) Capsule::table('tblorders')->where('id', $orderId)->value('userid');
+    }
 
     // Check admin event enabled
     $adminEvtEnabled = GatewayManager::get('admin_evt_admin_new_order');
