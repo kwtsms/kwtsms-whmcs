@@ -31,7 +31,7 @@ free API testing and credits that do not expire.
 
 ## Requirements
 
-- WHMCS 8.12.x, 8.13.x or 9.0.x, PHP 8.2 or 8.3 with `allow_url_fopen` on.
+- WHMCS 8.12.x, 8.13.x, 9.0.x or 9.1.x, PHP 8.2 or 8.3 with `allow_url_fopen` on.
 - International phone number input enabled in WHMCS settings.
 - A kwtSMS account (free test account, no papers): https://www.kwtsms.com/cportal/signup/
 

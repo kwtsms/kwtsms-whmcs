@@ -37,7 +37,8 @@ class GatewayManager
      * Module version: the one source for kwtsms_config() and the User-Agent token.
      * 2026-11-05 14:53 +03: moved here from kwtsms_config() so hooks can read it without the module file, #939.
      */
-    public const VERSION = '1.0.0';
+    // 2026-11-08 08:26 +03: 1.0.1 (WHMCS 9.1 token fix), whmcs-101-release
+    public const VERSION = '1.0.1';
 
     /**
      * Product token passed as the kwtsms-php app_name (User-Agent): "kwtsms-whmcs/<VERSION>".
