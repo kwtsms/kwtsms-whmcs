@@ -1,0 +1,26 @@
+# FILE:      tests/e2e/compose.yml
+# CREATED:   2026-11-08 08:33 +03
+# TASK:      whmcs-e2e
+# AUTHOR:    M Alhassoun
+# WHAT:      WHMCS test stack: MySQL 8.0 + PHP 8.3/ionCube web on http://localhost:8080 (memory-limited).
+# WHY:       Throwaway WHMCS for the end-to-end event tests; WORK (set by run.sh) holds WHMCS and the module build.
+# USAGE:     run.sh starts and removes it; port 8080 and host "localhost" because a WHMCS licence is bound to its location.
+# DEPENDS:   Dockerfile in this folder
+name: kwtsms-whmcs-e2e
+services:
+  db:
+    image: mysql:8.0
+    mem_limit: 768m
+    environment: {MYSQL_ROOT_PASSWORD: e2eroot, MYSQL_DATABASE: whmcs, MYSQL_USER: whmcs, MYSQL_PASSWORD: e2epass}
+    healthcheck: {test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-pe2eroot"], interval: 3s, retries: 60}
+  web:
+    build: .
+    mem_limit: 1g
+    depends_on: {db: {condition: service_healthy}}
+    ports: ["8080:80"]
+    environment:
+      KWTSMS_E2E_TEST_NUMBER: ${KWTSMS_TEST_NUMBER:?}
+    volumes:
+      - ${WORK:?}/site/whmcs:/var/www/html
+      - ${WORK:?}/module:/var/www/html/modules/addons/kwtsms
+      - ${WORK:?}/events.php:/e2e/events.php:ro
