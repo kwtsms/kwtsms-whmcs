@@ -13,7 +13,7 @@
 Send SMS to your WHMCS clients when an invoice is paid or they register, and to your admins on new orders, through
 kwtSMS, the Kuwaiti SMS gateway. Free and open source.
 
-kwtSMS delivers to Zain, Ooredoo, stc and Virgin in Kuwait and to more than 200 countries, with your own Sender ID,
+kwtSMS delivers to Zain, Ooredoo, STC and Virgin in Kuwait and to more than 200 countries, with your own Sender ID,
 free API testing and credits that do not expire.
 
 ## Features
