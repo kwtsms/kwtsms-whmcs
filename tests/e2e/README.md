@@ -19,6 +19,18 @@ KWTSMS_PASSWORD=...        # kwtSMS API password
 KWTSMS_TEST_NUMBER=965XXXXXXXX
 ```
 
+### Licence "Invalid"
+
+A WHMCS development licence is bound to the IP address and directory it first saw. Inside Docker that is the web
+container's IP, not your machine's. `compose.yml` pins the web container to `172.26.0.3` on a fixed subnet and serves
+WHMCS from `/var/www/html`, so the bound values stay the same on every run.
+
+If the admin area redirects to `licenseerror.php?status=Invalid`:
+1. Open the licence in the WHMCS client area and read **Valid IPs** and **Valid Directory**.
+2. Make `ipv4_address` in `compose.yml` and the web root match them (or reissue the licence there; it binds again
+   on the next check).
+3. Run again. Reissue is only needed when the licence must move to a new IP or directory.
+
 ## What it checks
 
 | Case | Flow |
