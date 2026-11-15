@@ -10,6 +10,7 @@ name: kwtsms-whmcs-e2e
 services:
   db:
     image: mysql:8.0
+    networks: [e2e]
     mem_limit: 768m
     environment: {MYSQL_ROOT_PASSWORD: e2eroot, MYSQL_DATABASE: whmcs, MYSQL_USER: whmcs, MYSQL_PASSWORD: e2epass}
     healthcheck: {test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-pe2eroot"], interval: 3s, retries: 60}
@@ -18,9 +19,15 @@ services:
     mem_limit: 1g
     depends_on: {db: {condition: service_healthy}}
     ports: ["8080:80"]
+    # 2026-11-15 22:00 +03: fixed IP; the WHMCS dev licence is bound to 172.26.0.3 + /var/www/html (q-whmcs-reissue)
+    networks: {e2e: {ipv4_address: 172.26.0.3}}
     environment:
       KWTSMS_E2E_TEST_NUMBER: ${KWTSMS_TEST_NUMBER:?}
     volumes:
       - ${WORK:?}/site/whmcs:/var/www/html
       - ${WORK:?}/module:/var/www/html/modules/addons/kwtsms
       - ${WORK:?}/events.php:/e2e/events.php:ro
+networks:
+  # 2026-11-15 22:00 +03: fixed subnet for the licence IP
+  e2e:
+    ipam: {config: [{subnet: 172.26.0.0/24}]}
